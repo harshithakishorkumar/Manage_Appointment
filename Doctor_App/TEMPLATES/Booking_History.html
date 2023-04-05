@@ -1,0 +1,41 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+    <h1 class="H">Booking History</h1>
+
+    <div class="container" style="width:80%;">
+         <table class="table table-warning table-stripped table-hover">
+             <thead>
+                 <th style="text-align: center;">Id</th>
+                 <th style="text-align: center;">Doctor_Id</th>
+                 <th style="text-align: center;">Patient_Id</th>
+                 <th style="text-align: center;">Slot</th>
+                 <th style="text-align: center;">Date</th>
+                 <th style="text-align: center;">Action</th>
+             </thead>
+
+             <tbody>
+                {%for i in details%}
+                 <tr style="text-align: center;">
+                     <td>{{i.id}}</td>
+                     <td>{{i.Doctor_Id}}</td>
+                     <td>{{i.Patient_Id}}</td>
+                     <td>{{i.Slot}}</td>
+                     <td>{{i.Date}}</td>
+                     <td><a class="button btn btn-danger" href="/Delete_Apt/{{i.id}}" style="width: 50%;">Cancel Appointment</a></td>
+                 </tr>
+                 {%endfor%}
+             </tbody>
+         </table>
+    </div>
+</div>
+{%endblock%}

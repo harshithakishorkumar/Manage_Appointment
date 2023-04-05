@@ -1,0 +1,35 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+    <h1 class="H">Feedback</h1>
+
+    <div class="container">
+        <table class="table table-warning table-stripped table-hover">
+            <thead>
+                <th>ID</th>
+                <th>Patient_Id</th>
+                <th>Feedback</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Patient_Id}}</td>
+                    <td>{{i.Feedback}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}

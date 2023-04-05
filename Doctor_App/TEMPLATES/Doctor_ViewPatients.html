@@ -1,0 +1,62 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+    <h1 class="H">View Patients</h1>
+
+
+    <div class="container">
+
+        <br>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <div class="row" style="padding-top:50px;">
+            <form class="example" action="/Doctor_ViewPatients/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" placeholder="Search.." name="searched" autofocus required>
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+        <br>
+        {%if details%}
+        <table class="table table-warning table-stripped table-hover">
+            <thead>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Medication</th>
+                <th>Action</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Name}}</td>
+                    <td>{{i.Age}}</td>
+                    <td>{{i.Gender}}</td>
+                    <td>{{i.Phone}}</td>
+                    <td>{{i.Address}}</td>
+                    <td>{{i.Medication}}</td>
+                    <td>
+                        <a class="btn btn-warning" href="/Doctor_ViewTreatment/{{i.id}}">View Treatment</a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%endif%}
+    </div>
+</div>
+{%endblock%}

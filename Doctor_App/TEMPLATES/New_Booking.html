@@ -1,0 +1,114 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+
+<!-- Modal for view button -->
+<!-- View Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+             <div class="container">
+        <form class="row g-3" method="POST" action="/New_Booking/" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="col-md-6">
+                    <label  class="form-label">ID</label>
+                    <input type="text" class="form-control" name="updateid" id="updateid"  readonly>
+              </div>
+
+              <div class="row">
+                  <div class="mc-3 col-md-6">
+                    <label  class="form-label">Timing Slot</label>
+                    <select name="slot" class="form-select">
+                        <option selected>Select Timing</option>
+                        <option value="6pm">6pm</option>
+                        <option value="7pm">7pm</option>
+                        <option value="8pm">8pm</option>
+                        <option value="9pm">9pm</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                      <label  class="form-label">Date</label>
+                      <input class="form-control" type="date" name="date">
+                  </div>
+              </div>
+
+              <div class="col-md-12">
+                  <input style="width:100%;" class="btn btn-secondary" type="submit" name="">
+              </div>
+              
+        </form>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ---------------------------------------------------------------------------------------------------------------------- -->
+    <h1 class="H">New Booking</h1>
+
+    <div class="container">
+        
+        <table class="table table-dark table-stripped table-hover">
+            <thead>
+                <th>Id</th>
+                <th>Doctor Name</th>
+                <th>Address</th>
+                <th>Action</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Name}}</td>
+                    <td>{{i.Address}}</td>
+                    <td >
+                        <input type="button" class="btn btn-info "id=" {{i.id}}"
+                             value="Book" onclick="View(this)" style="width: 100%;">
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+   function View(me){
+        var id          = me.id;
+        var str         = id.split("$");
+        var ids         = str[0];
+       
+       
+
+        document.getElementById("updateid").value       = ids;
+       
+        $('#myModal1').modal('show');
+    }
+</script>
+
+
+
+
+
+
+
+{%endblock%}

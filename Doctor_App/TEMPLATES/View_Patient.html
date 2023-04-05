@@ -1,0 +1,81 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+
+<style>
+    .box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.box > div { /*The > denotes only the first or immediate child will be affected*/
+  width: 600px;
+  height: auto;
+  background-color: #fae8d2;
+/*  border: 1px solid;*/
+  padding: 10px;
+  box-shadow: 5px 10px #888888;
+  border-radius: 10px;
+  /*border: dotted;
+*/
+}
+</style>
+ <div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+    <div class="box">
+    <div >
+        <div class="row">
+            <div class="col-md-4">
+                <img style="height: 200px;width: 180px;" src="/media/examination.png">
+
+            </div>
+
+            <div class="col-md-8">
+                {%for i in info%}
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h1>Patient Profile</h1>
+                <hr>
+                <label class="form-label">Patients Name</label>
+                <input class="form-control" type="text" name="name" value="{{i.Name}}" readonly>
+                <br>
+
+                <label class="form-label">Age</label>
+                <input class="form-control" type="text" name="type" value="{{i.Age}}" readonly>
+                <br>
+
+                <label class="form-label">Gender</label>
+                <input class="form-control" type="text" name="address" value="{{i.Gender}}" readonly>
+                <br>
+
+                <label class="form-label">Phone Number</label>
+                <input class="form-control" type="tel" name="phone"  id="phone" value="{{i.Phone}}" readonly>
+                <br>
+
+                <label class="form-label">Address</label>
+                <input class="form-control" type="text" name="time" value="{{i.Address}}" readonly>
+                <br>
+
+                <label class="form-label">Medication</label>
+                <input class="form-control" type="text" name="time" value="{{i.Medication}}" readonly>
+                <br>
+                </form>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+</div>
+</div>
+    {% endblock %}

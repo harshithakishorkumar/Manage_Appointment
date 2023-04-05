@@ -1,0 +1,165 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+<!-- Modal for update button -->
+<!-- Update Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+             <div class="container">
+        <form class="row g-3" method="POST" action="/Add_Treatment/" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="col-md-6">
+                    <label  class="form-label">Booking ID</label>
+                    <input type="text" class="form-control" name="viewid" id="viewid"  readonly>
+              </div>
+
+              <div class="col-md-6">
+                    <label  class="form-label">Patient ID</label>
+                    <input type="text" class="form-control" name="viewname" id="viewname"  required>
+              </div>
+
+              <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Time Slot</label>
+                    <input type="text" class="form-control" name="viewage" id="viewage"  required>
+              </div>
+
+              <div class="col-6">
+                    <label for="inputAddress" class="form-label">Date</label>
+                    <input type="text" class="form-control"  
+                    name="viewgender" id="viewgender"  >
+              </div>
+
+              <div class="col-md-6">
+                    <label for="inputCity" class="form-label">Treatment</label>
+                    <input type="text" class="form-control" id="viewphone" name="viewphone"  required >
+              </div>
+              <br>
+
+              <div hidden>
+                  <input type="text" name="searched" value="{{searched}}">
+              </div>
+
+              <div class="col-md-12">
+                  <input style="width:100%;" class="btn btn-secondary" type="submit" name="">
+              </div>
+        </form>
+    </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- ------------------------------------------------------------------------------------------------------------------------ -->
+    <h1 class="H">View Appointments</h1>
+
+    <div class="container" style="padding-top:20px;width: 70%;">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <div class="row" style="padding-top:50px;">
+            <form class="example" action="/View_AppointmentAdmin/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="date" value="{{searched}}" placeholder="Search.." name="searched" autofocus required>
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <br>
+        {%if Info%}
+        <table class="table table-warning table-stripped table-hover">
+            <thead>
+                <th>Id</th>
+                <th>Patient id</th>
+                <th>Slot</th>
+                <th>Date</th>
+                <th>Treatment</th>
+            </thead>
+
+            <tbody>
+                {%for i in Info%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Patient_Id}}</td>
+                    <td>{{i.Slot}}</td>
+                    <td>{{i.Date}}</td>
+                    <td>{{i.Treatment}}</td>
+                  
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%endif%}
+
+
+          {%if details%}
+        <table class="table table-warning table-stripped table-hover">
+            <thead>
+                <th>Id</th>
+                <th>Patient id</th>
+                <th>Slot</th>
+                <th>Date</th>
+                <th>Treatment</th>
+                <th>Action</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Patient_Id}}</td>
+                    <td>{{i.Slot}}</td>
+                    <td>{{i.Date}}</td>
+                    <td>{{i.Treatment}}</td>
+                    <td>
+                        <a style="width:100%;"  class="btn btn-secondary" href="/View_Patient/{{i.Patient_Id}}">View Details</a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <div class="container" style="display:flex;justify-content: center;align-items: center;padding-top: 20px;">
+            <h1><b>No Appointments are scheduled for {{searched}}</b></h1>
+        </div>
+        {%endif%}
+    </div>
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    function Update(me){
+        var id          = me.id;
+        var str         = id.split("$");
+        var ids         = str[0];
+        var Name        = str[1];
+        var Age         = str[2];
+        var Gender      = str[3];
+        var Phone       = str[4];
+     
+       
+
+        document.getElementById("viewid").value       = ids;
+        document.getElementById("viewname").value     = Name;
+        document.getElementById("viewage").value      = Age;
+        document.getElementById("viewgender").value   = Gender;
+        document.getElementById("viewphone").value    = Phone;
+        $('#myModal2').modal('show');
+    }
+
+</script>
+{%endblock%}

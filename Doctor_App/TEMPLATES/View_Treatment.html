@@ -1,0 +1,40 @@
+{% extends 'Base.html'%}
+    {% block content%}
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+    {%load static%}
+    
+<div style="background-image:  url('/media/bg.jpg'); background-repeat:no-repeat;background-size:cover;  height:658px; width:100%;">
+    <h1 class="H">View Treatment</h1>
+
+
+    <div class="container" style="width:60%;">
+        <table class="table table-warning table-stripped table-hover">
+            <thead>
+                <th>Appointment Id</th>
+                <th>Doctor Id</th>
+                <th>Treatment</th>
+            </thead>
+
+            <tbody>
+                {%for i in details%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.Doctor_Id}}</td>
+                    {%if i.Treatment == NULL %}
+                    <td>Doctor has not posted treatment</td>
+                    {%else%}
+                    <td>{{i.Treatment}}</td>
+                    {%endif%}
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}
